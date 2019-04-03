@@ -1,6 +1,6 @@
 #include "RectF.h"
 
-RectF::RectF(float in_left, float in_top , float in_right, float in_botton)
+RectF::RectF(float in_left, float in_top, float in_right, float in_botton)
 {
 	left = in_left;
 	right = in_right;

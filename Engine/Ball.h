@@ -9,13 +9,13 @@ class Ball
 public:
 	Ball(float x, float y, float speedX, float speedY)
 		:
-		position(x,y),
+		position(x, y),
 		speed(speedX, speedY)
 	{
 	}
-	void Update()
+	void Update(float deltaTime)
 	{
-		position += speed;
+		position += speed * deltaTime;
 		rect = RectF::GetRectangle(position, radius, radius);
 	}
 	void Draw(Graphics& gfx)
@@ -25,23 +25,35 @@ public:
 
 	void WallCollide(const RectF& wall)
 	{
-		if (rect.left < wall.left || rect.right > wall.right)
+		if (rect.left < wall.left)
 		{
-			ReboundX();
+			float offsetCorrection = rect.left - wall.left;
+			ReboundX(offsetCorrection);
 		}
-		if (rect.top < wall.top || rect.botton > wall.botton)
+		else if (rect.right > wall.right)
 		{
-			ReboundY();
+			float offsetCorrection = rect.right - wall.right;
+			ReboundX(offsetCorrection);
+		}
+		if (rect.top < wall.top)
+		{
+			float offsetCorrection = rect.top - wall.top;
+			ReboundY(offsetCorrection);
+		}
+		else if (rect.botton > wall.botton)
+		{
+			float offsetCorrection = rect.botton - wall.botton;
+			ReboundY(offsetCorrection);
 		}
 	}
-	void ReboundX()
+	void ReboundX(float offset)
 	{
-		position.x -= speed.x;
+		position.x -= offset * 2;
 		speed.x = -speed.x;
 	}
-	void ReboundY()
+	void ReboundY(float offset)
 	{
-		position.y -= speed.y;
+		position.y -= offset * 2;
 		speed.y = -speed.y;
 	}
 

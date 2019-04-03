@@ -1,5 +1,5 @@
-/****************************************************************************************** 
- *	Chili DirectX Framework Version 16.07.20											  *	
+/******************************************************************************************
+ *	Chili DirectX Framework Version 16.07.20											  *
  *	Game.cpp																			  *
  *	Copyright 2016 PlanetChili.net <http://www.planetchili.net>							  *
  *																						  *
@@ -21,19 +21,19 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
+	wnd(wnd),
+	gfx(wnd),
 	brick(80, 60, 150, 75),
 	walls(0, 0, 800, 600),
-	ball(400, 300, 100, 100)
+	ball(400, 300, -200, -400)
 {
 }
 
 void Game::Go()
 {
-	gfx.BeginFrame();	
+	gfx.BeginFrame();
 	UpdateModel();
 	ComposeFrame();
 	gfx.EndFrame();
@@ -41,7 +41,8 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
-	ball.Update();
+	float deltaTime = ft.Mark();
+	ball.Update(deltaTime);
 	ball.WallCollide(walls);
 }
 
