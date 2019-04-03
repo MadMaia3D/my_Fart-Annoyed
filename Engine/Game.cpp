@@ -25,7 +25,9 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	brick(80, 60, 150, 75)
+	brick(80, 60, 150, 75),
+	walls(0, 0, 800, 600),
+	ball(400, 300, 100, 100)
 {
 }
 
@@ -39,8 +41,11 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	ball.Update();
+	ball.WallCollide(walls);
 }
 
 void Game::ComposeFrame()
 {
+	ball.Draw(gfx);
 }
